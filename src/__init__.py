@@ -3,7 +3,7 @@ import emoji
 
 @bot.event
 async def on_ready():
-    print("Connected to discord")
+    print("Connected to discord as " + bot.user.name)
 
 
 @bot.event
