@@ -54,3 +54,9 @@ async def on_message(msg):
         await msg.delete()
         await msg.channel.send("get silenced lmao")
         return
+    
+    if "mom" in msg.content.lower() or "mother" in msg.content.lower():
+        await msg.reply("你妈妈是狗")
+    
+    if "japan" in msg.content.lower():
+        await msg.reply("suicide :flag_jp: :sunglasses:")
