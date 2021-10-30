@@ -1,6 +1,8 @@
 from .bot import bot
+from .commands import commands, help_command
 import emoji
 
+PREFIX = "xi "
 xi = """
 ⣿⣿⣿⣿⣿⠟⠋⠄⠄⠄⠄⠄⠄⠄⢁⠈⢻⢿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⠃⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⡀⠭⢿⣿⣿⣿⣿
@@ -29,7 +31,25 @@ async def on_ready():
 async def on_message(msg):
     if msg.author == bot.user:
         return
-    
+
+    if msg.content.lower().startswith(PREFIX):
+        try:
+            command_str = msg.content.replace(PREFIX, "", 1).split()[0].lower()
+            command = commands.get(command_str)
+
+            if command_str == "help":
+                await msg.channel.send(help_command.help_command(PREFIX))
+                return
+
+            if not command:
+                await msg.reply(f"Command not found. Type `{PREFIX}help` for help")
+                return
+
+            await command["handler"](msg, *msg.content.replace(PREFIX + command_str + " ", "", 1).split())
+        except IndexError:
+            await msg.channel.send(help_command.help_command(PREFIX))
+        return
+
     if ":rolling_on_the_floor_laughing:" in emoji.demojize(msg.content) or ":face_with_tears_of_joy:" in emoji.demojize(msg.content):
         await msg.reply("kys")
         return
@@ -57,6 +77,8 @@ async def on_message(msg):
     
     if "mom" in msg.content.lower() or "mother" in msg.content.lower():
         await msg.reply("你妈妈是狗")
+        return
     
     if "japan" in msg.content.lower():
         await msg.reply("suicide :flag_jp: :sunglasses:")
+        return
