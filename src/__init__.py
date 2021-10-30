@@ -60,6 +60,3 @@ async def on_message(msg):
     
     if "japan" in msg.content.lower():
         await msg.reply("suicide :flag_jp: :sunglasses:")
-
-    if msg.author.id == 736505808753393675:
-        await msg.reply("rutv kys")
