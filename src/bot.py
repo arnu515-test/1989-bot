@@ -1,3 +1,3 @@
-from discord.ext.commands import Bot
+from discord import Client
 
-bot = Bot(command_prefix="china ")
+bot = Client()
