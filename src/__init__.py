@@ -82,3 +82,7 @@ async def on_message(msg):
     if "japan" in msg.content.lower():
         await msg.reply("suicide :flag_jp: :sunglasses:")
         return
+
+    if "genshin" in msg.content.lower():
+        await msg.reply("ganesh impact better https://github.com/arnu515-test/ganesh-impact")
+        return
