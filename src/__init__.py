@@ -1,6 +1,6 @@
 from .bot import bot
 from .commands import commands, help_command
-from better_profanity import profanity
+# from better_profanity import profanity
 import emoji
 
 PREFIX = "xi "
@@ -88,6 +88,6 @@ async def on_message(msg):
         await msg.reply("ganesh impact better https://github.com/arnu515-test/ganesh-impact")
         return
     
-    if profanity.contains_profanity(msg.content.lower()):
-        await msg.reply("https://www.youtube.com/watch?v=qQMsLAIqtmU")
-        return
+    # if profanity.contains_profanity(msg.content.lower()):
+        # await msg.reply("https://www.youtube.com/watch?v=qQMsLAIqtmU")
+        # return
