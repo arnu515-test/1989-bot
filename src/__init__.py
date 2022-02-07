@@ -70,6 +70,10 @@ async def on_message(msg):
     if "windows" in msg.content.lower():
         await msg.reply("Convert to linux. My current favorite distro: https://pop.system76.com")
         return
+
+    if "candice" in msg.content.lower():
+        await msg.reply("Your mother hung herself he he he hah")
+        return
     
     if msg.content == "1984":
         await msg.delete()
