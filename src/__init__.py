@@ -1,7 +1,14 @@
+from discord import Message, Guild, AuditLogAction, AuditLogEntry, Member, Embed
 from .bot import bot
 from .commands import commands, help_command
 # from better_profanity import profanity
 import emoji
+import json
+import os
+
+if not os.path.exists("dmesg.json"):
+    with open("dmesg.json", "w") as f:
+        json.dump(dict(), f)
 
 PREFIX = "xi "
 xi = """
@@ -29,7 +36,7 @@ async def on_ready():
 
 
 @bot.event
-async def on_message(msg):
+async def on_message(msg: Message):
     if msg.author == bot.user:
         return
 
@@ -95,3 +102,39 @@ async def on_message(msg):
     # if profanity.contains_profanity(msg.content.lower()):
         # await msg.reply("https://www.youtube.com/watch?v=qQMsLAIqtmU")
         # return
+
+
+@bot.event
+async def on_message_delete(msg: Message):
+    guild: Guild = msg.guild
+    async for log in guild.audit_logs(limit=1, action=AuditLogAction.message_delete):
+        log: AuditLogEntry = log
+        deletor: Member = log.user
+        target: Member = log.target
+        # Remove the below if statement if you want bot's messages to be deleted with noise as well
+        if target.id != bot.user.id:
+            if target.id == msg.author.id:
+                await msg.channel.send(f"Uh oh! {deletor.mention} is being jewish again. They deleted a message from {target.mention}:\n")
+                embed = Embed(title="Deleted message")
+                embed.add_field(name="From", value=deletor.mention, inline=False)
+                embed.add_field(name="Message", value=msg.content, inline=False)
+                embed.set_footer(text=f"{target.name}, don't be jewish again!")
+                await msg.channel.send(embed=embed)
+                return
+    
+    if not os.path.exists("dmesg.json"):
+        with open("dmesg.json", "w") as f:
+            json.dump(dict(), f)
+    
+    with open("dmesg.json", "r+") as f:
+        x = {}
+        try:
+            x = json.load(f)
+        except:
+            x = {}
+        x[str(msg.channel.id)] = {"from": msg.author.mention, "name": msg.author.name, "content": msg.content}
+        f.seek(0, 0)
+        f.truncate(0)
+        json.dump(x, f)
+    
+    print("Saved deleted message")
