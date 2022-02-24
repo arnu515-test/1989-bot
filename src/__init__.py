@@ -116,9 +116,9 @@ async def on_message_delete(msg: Message):
             if target.id == msg.author.id:
                 await msg.channel.send(f"Uh oh! {deletor.mention} is being jewish again. They deleted a message from {target.mention}:\n")
                 embed = Embed(title="Deleted message")
-                embed.add_field(name="From", value=deletor.mention, inline=False)
+                embed.add_field(name="From", value=target.mention, inline=False)
                 embed.add_field(name="Message", value=msg.content, inline=False)
-                embed.set_footer(text=f"{target.name}, don't be jewish again!")
+                embed.set_footer(text=f"{deletor.name}, don't be jewish again!")
                 await msg.channel.send(embed=embed)
                 return
     
