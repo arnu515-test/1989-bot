@@ -98,6 +98,10 @@ async def on_message(msg: Message):
     if "genshin" in msg.content.lower():
         await msg.reply("ganesh impact better https://github.com/arnu515-test/ganesh-impact")
         return
+
+    if "e" in msg.content.lower():
+        await msg.reply("🐔 👈 Oh look a cock!")
+        return
     
     # if profanity.contains_profanity(msg.content.lower()):
         # await msg.reply("https://www.youtube.com/watch?v=qQMsLAIqtmU")
